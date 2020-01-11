@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 
 // ADD_WORD
-export const addWord = ({ source, destination, repeatAt = 0 } = {}) => ({
+export const addWord = ({ source = '', destination= '', repeatAt = 0 } = {}) => ({
     type: 'ADD_WORD',
     word: {
         id: uuid(),
