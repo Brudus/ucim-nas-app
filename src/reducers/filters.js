@@ -1,6 +1,6 @@
 const filtersReducerDefaultState = {
     text: '',
-    sortBy: 'destinationText'
+    sortBy: 'destination'
 };
 
 export default (state = filtersReducerDefaultState, action) => {
