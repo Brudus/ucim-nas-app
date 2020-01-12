@@ -42,7 +42,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     setTextFilter: (text) => dispatch(setTextFilter(text)),
     sortBySource: () => dispatch(sortBySource()),
-    sortByDestination: () => dispatch(sortByDestination),
+    sortByDestination: () => dispatch(sortByDestination()),
     sortByRepeatAt: () => dispatch(sortByRepeatAt())
 })
 
