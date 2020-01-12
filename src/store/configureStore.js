@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from 'redux';
-import wordsReducer from '../redoucers/words';
-import filtersReducer from '../redoucers/filters';
+import wordsReducer from '../reducers/words';
+import filtersReducer from '../reducers/filters';
 
 export default () => {
     const store = createStore(
