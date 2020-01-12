@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render WordListItem with word 1`] = `
+<div>
+  <Link
+    to="/edit/1"
+  >
+    <h3>
+      dobro
+    </h3>
+  </Link>
+  <h4>
+    gut
+  </h4>
+  <p>
+    Next repetition: 
+    Thu, 01 Jan 1970 00:00:00 GMT
+  </p>
+</div>
+`;
