@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render EditWordPage correctly 1`] = `
+<div>
+  <WordForm
+    onSubmit={[Function]}
+    word={
+      Object {
+        "destination": "nisam",
+        "factor": 1.5,
+        "id": "2",
+        "repeatAt": 1024,
+        "source": "bin ich nicht",
+      }
+    }
+  />
+  <button
+    onClick={[Function]}
+  >
+    Remove
+  </button>
+</div>
+`;

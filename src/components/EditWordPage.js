@@ -3,26 +3,36 @@ import { connect } from 'react-redux';
 import WordForm from './WordForm';
 import { editWord, removeWord } from '../actions/words';
 
-const EditWordPage = (props) => (
-    <div>
-        <WordForm 
-            word={props.word}
-            onSubmit={(word) => {
-                props.dispatch(editWord(props.word.id, word));
-                props.history.push('/');
-            }}
-        />
-        <button onClick={(e) => {
-            props.dispatch(removeWord({ id: props.word.id }));
-            props.history.push('/');
-        }}>Remove</button>
-    </div>
-);
+export class EditWordPage extends React.Component {
+    onSubmit = (word) => {
+        this.props.editWord(this.props.word.id, word);
+        this.props.history.push('/');
+    };
+    onRemove = (id) => {
+        this.props.removeWord({ id: this.props.word.id });
+        this.props.history.push('/');
+    };
 
-const mapStateToProps = (state, props) => {
-    return {
-        word: state.words.find((word) => word.id === props.match.params.id)
+    render() {
+        return (
+            <div>
+                <WordForm 
+                    word={this.props.word}
+                    onSubmit={this.onSubmit}
+                />
+                <button onClick={this.onRemove}>Remove</button>
+            </div>
+        );
     };
 };
 
-export default connect(mapStateToProps)(EditWordPage);
+const mapStateToProps = (state, props) => ({
+    word: state.words.find((word) => word.id === props.match.params.id)
+});
+
+const mapDispatchToProps = (dispatch, props) => ({
+    editWord: (id, word) => dispatch(editWord(id, word)),
+    removeWord: (data) => dispatch(removeWord(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditWordPage);
