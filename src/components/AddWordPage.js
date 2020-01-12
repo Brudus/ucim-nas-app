@@ -3,16 +3,26 @@ import { connect } from 'react-redux';
 import WordForm from './WordForm';
 import { addWord } from '../actions/words';
 
-const AddWordPage = (props) => (
-    <div>
-        <h1>Add Word</h1>
-        <WordForm 
-            onSubmit={(word) => {
-                props.dispatch(addWord(word));
-                props.history.push('/');
-            }}
-        />
-    </div>
-);
+export class AddWordPage extends React.Component {
+    onSubmit = (word) => {
+        this.props.addWord(word);
+        this.props.history.push('/');
+    };
 
-export default connect()(AddWordPage);
+    render() {
+        return (
+            <div>
+                <h1>Add Word</h1>
+                <WordForm 
+                    onSubmit={this.onSubmit}
+                />
+            </div>
+        );
+    };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    addWord: (word) => dispatch(addWord(word))
+});
+
+export default connect(undefined, mapDispatchToProps)(AddWordPage);
