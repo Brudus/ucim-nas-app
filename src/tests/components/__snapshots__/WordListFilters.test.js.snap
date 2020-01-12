@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render WordListFilters correctly 1`] = `
+<div>
+  <input
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <select
+    onChange={[Function]}
+    value="destination"
+  >
+    <option
+      value="destination"
+    >
+      Serbo-Croatian
+    </option>
+    <option
+      value="source"
+    >
+      German
+    </option>
+    <option
+      value="repeatAt"
+    >
+      Repetition date
+    </option>
+  </select>
+</div>
+`;
+
+exports[`should render WordListFilters with changed filters correclty 1`] = `
+<div>
+  <input
+    onChange={[Function]}
+    type="text"
+    value="t"
+  />
+  <select
+    onChange={[Function]}
+    value="source"
+  >
+    <option
+      value="destination"
+    >
+      Serbo-Croatian
+    </option>
+    <option
+      value="source"
+    >
+      German
+    </option>
+    <option
+      value="repeatAt"
+    >
+      Repetition date
+    </option>
+  </select>
+</div>
+`;
