@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render WordList with empty message 1`] = `
+<div>
+  <p>
+    No words available.
+  </p>
+</div>
+`;
+
+exports[`should render WordList with words 1`] = `
+<div>
+  <WordListItem
+    destination="dobro"
+    factor={1}
+    id="1"
+    key="1"
+    repeatAt={0}
+    source="gut"
+  />
+  <WordListItem
+    destination="nisam"
+    factor={1.5}
+    id="2"
+    key="2"
+    repeatAt={1024}
+    source="bin ich nicht"
+  />
+  <WordListItem
+    destination="hvala"
+    factor={3}
+    id="3"
+    key="3"
+    repeatAt={-1000}
+    source="danke"
+  />
+</div>
+`;
