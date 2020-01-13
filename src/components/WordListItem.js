@@ -2,7 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const formatDate = (dateToFormat) => {
-    return new Date(dateToFormat).toUTCString();
+    const nowDate = Date.now();
+    const dateDifference = dateToFormat - nowDate;
+    const dayInMs = 1000 * 60 * 60 * 24;
+
+    if (dateDifference <= 0) {
+        return 'now';
+    } else if (dateDifference < dayInMs) {
+        return 'today';
+    } else if (dateDifference < 2 * dayInMs) {
+        return 'tomorrow';
+    } else {
+        return `in ${Math.floor(dateDifference / dayInMs)} days`;
+    }
 };
 
 const WordListItem = ({ id, source, destination, repeatAt }) => (

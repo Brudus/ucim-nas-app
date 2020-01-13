@@ -1,6 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render WordListItem with word 1`] = `
+exports[`should render WordListItem correctly with word (in 2 days) 1`] = `
+<div>
+  <Link
+    to="/edit/2"
+  >
+    <h3>
+      nisam
+    </h3>
+  </Link>
+  <h4>
+    bin ich nicht
+  </h4>
+  <p>
+    Next repetition: 
+    in 2 days
+  </p>
+</div>
+`;
+
+exports[`should render WordListItem correctly with word (today) 1`] = `
+<div>
+  <Link
+    to="/edit/2"
+  >
+    <h3>
+      nisam
+    </h3>
+  </Link>
+  <h4>
+    bin ich nicht
+  </h4>
+  <p>
+    Next repetition: 
+    today
+  </p>
+</div>
+`;
+
+exports[`should render WordListItem correctly with word (tomorrow) 1`] = `
+<div>
+  <Link
+    to="/edit/2"
+  >
+    <h3>
+      nisam
+    </h3>
+  </Link>
+  <h4>
+    bin ich nicht
+  </h4>
+  <p>
+    Next repetition: 
+    tomorrow
+  </p>
+</div>
+`;
+
+exports[`should render WordListItem with word (now) 1`] = `
 <div>
   <Link
     to="/edit/1"
@@ -14,7 +71,7 @@ exports[`should render WordListItem with word 1`] = `
   </h4>
   <p>
     Next repetition: 
-    Thu, 01 Jan 1970 00:00:00 GMT
+    now
   </p>
 </div>
 `;
