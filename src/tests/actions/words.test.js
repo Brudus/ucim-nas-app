@@ -1,38 +1,68 @@
-import { addWord, editWord, removeWord } from '../../actions/words';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import { startAddWord, addWord, editWord, removeWord } from '../../actions/words';
+import words from '../fixtures/words';
+import database from '../../firebase/firebase';
 
-test('should setup add word object with provided values', () => {
-    const source = 'Karte';
-    const destination = 'karta';
-    const repeatAt = Date.now();
+const createMockStore = configureMockStore([thunk]);
 
-    const wordData = {
-        source,
-        destination,
-        repeatAt
-    };
-    
-    const action = addWord(wordData);
+test('should setup add word object with provided values', () => {    
+    const action = addWord(words[2]);
     expect(action).toEqual({
         type: 'ADD_WORD',
-        word: {
-            ...wordData,
-            id: expect.any(String),
-            factor: 1
-        }
+        word: words[2]
     });
 });
 
-test('should setup add word object with default values', () => {
-    const action = addWord();
-    expect(action).toEqual({
-        type: 'ADD_WORD',
-        word: { 
-            id: expect.any(String),
-            source: '',
-            destination: '',
-            repeatAt: 0,
-            factor: 1
-        }
+test('should add word to database and store', (done) => {
+    const store = createMockStore({});
+    const wordData = {
+        source: 'Karte',
+        destination: 'karta',
+        repeatAt: 1000
+    };
+
+    store.dispatch(startAddWord(wordData)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'ADD_WORD',
+            word: {
+                id: expect.any(String),
+                factor: 1,
+                ...wordData
+            }
+        });
+
+        return database.ref(`words/${actions[0].word.id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val()).toEqual({factor: 1, ...wordData});
+        done();
+    });
+});
+
+test('should add word with defaults to database and store', (done) => {
+    const store = createMockStore({});
+    const wordDefaults = {        
+        source: '',
+        destination: '',
+        repeatAt: 0
+    };
+
+    store.dispatch(startAddWord({})).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'ADD_WORD',
+            word: {
+                id: expect.any(String),
+                factor: 1,
+                ...wordDefaults        
+            }
+        });
+
+        return database.ref(`words/${actions[0].word.id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val()).toEqual({factor: 1, ...wordDefaults});
+        done();
     });
 });
 

@@ -1,16 +1,29 @@
 import uuid from 'uuid';
+import database from '../firebase/firebase';
 
 // ADD_WORD
-export const addWord = ({ source = '', destination= '', repeatAt = 0 } = {}) => ({
+export const addWord = (word) => ({
     type: 'ADD_WORD',
-    word: {
-        id: uuid(),
-        source,
-        destination,
-        factor: 1,
-        repeatAt
-    }
+    word
 });
+
+export const startAddWord = (wordData = {}) => {
+    return (dispatch) => {
+        const {
+            source = '', 
+            destination= '', 
+            repeatAt = 0
+        } = wordData;
+        const word = { source, destination, repeatAt, factor: 1 };
+        
+        return database.ref('words').push(word).then((ref) => {
+            dispatch(addWord({
+                id: ref.key,
+                ...word
+            }));
+        });
+    };
+};
 
 // REMOVE_WORD
 export const removeWord = ({ id } = {}) => ({

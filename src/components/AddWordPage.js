@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WordForm from './WordForm';
-import { addWord } from '../actions/words';
+import { startAddWord } from '../actions/words';
 
 export class AddWordPage extends React.Component {
     onSubmit = (word) => {
-        this.props.addWord(word);
+        this.props.startAddWord(word);
         this.props.history.push('/');
     };
 
@@ -22,7 +22,7 @@ export class AddWordPage extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addWord: (word) => dispatch(addWord(word))
+    startAddWord: (word) => dispatch(startAddWord(word))
 });
 
 export default connect(undefined, mapDispatchToProps)(AddWordPage);

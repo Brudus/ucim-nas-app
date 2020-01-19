@@ -3,12 +3,12 @@ import { shallow } from 'enzyme';
 import { AddWordPage } from '../../components/AddWordPage';
 import words from '../fixtures/words';
 
-let addWord, history, wrapper;
+let startAddWord, history, wrapper;
 
 beforeEach(() => {
-    addWord = jest.fn();
+    startAddWord = jest.fn();
     history = { push: jest.fn() };
-    wrapper = shallow(<AddWordPage addWord={addWord} history={history} />);
+    wrapper = shallow(<AddWordPage startAddWord={startAddWord} history={history} />);
 });
 
 test('should render AddWordPage correctly', () => {
@@ -18,5 +18,5 @@ test('should render AddWordPage correctly', () => {
 test('should handle onSubmit', () => {
     wrapper.find('WordForm').prop('onSubmit')(words[1]);
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(addWord).toHaveBeenLastCalledWith(words[1]);
+    expect(startAddWord).toHaveBeenLastCalledWith(words[1]);
 });
