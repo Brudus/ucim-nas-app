@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
+import { startSetWords } from './actions/words';
 import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/style.scss';
-
-import { startSetWords } from './actions/words';
 
 const store = configureStore();
 

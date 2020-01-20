@@ -31,6 +31,14 @@ export const removeWord = ({ id } = {}) => ({
     id
 });
 
+export const startRemoveWord = ({ id } = {}) => {
+    return (dispatch) => {
+        return database.ref(`words/${id}`).remove().then(() => {
+            dispatch(removeWord({ id }));
+        });
+    };
+};
+
 // EDIT_WORD
 export const editWord = (id, updates) => ({
     type: 'EDIT_WORD',

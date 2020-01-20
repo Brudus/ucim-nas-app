@@ -3,16 +3,16 @@ import { shallow } from 'enzyme';
 import { EditWordPage } from '../../components/EditWordPage';
 import words from '../fixtures/words';
 
-let editWord, removeWord, history, wrapper;
+let editWord, startRemoveWord, history, wrapper;
 
 beforeEach(() => {
     editWord = jest.fn();
-    removeWord = jest.fn();
+    startRemoveWord = jest.fn();
     history = { push: jest.fn() };
     wrapper = shallow(
         <EditWordPage 
             editWord={editWord} 
-            removeWord={removeWord} 
+            startRemoveWord={startRemoveWord} 
             history={history} 
             word={words[1]}
         />
@@ -29,8 +29,8 @@ test('should handle editWord', () => {
     expect(editWord).toHaveBeenLastCalledWith(words[1].id, words[1]);
 });
 
-test('should handle removeWord', () => {
+test('should handle startRemoveWord', () => {
     wrapper.find('button').simulate('click');
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(removeWord).toHaveBeenLastCalledWith({ id: words[1].id });
+    expect(startRemoveWord).toHaveBeenLastCalledWith({ id: words[1].id });
 });

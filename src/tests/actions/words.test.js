@@ -1,6 +1,14 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { startAddWord, addWord, editWord, removeWord, setWords, startSetWords } from '../../actions/words';
+import { 
+    startAddWord, 
+    addWord, 
+    editWord, 
+    removeWord, 
+    setWords, 
+    startSetWords, 
+    startRemoveWord 
+} from '../../actions/words';
 import words from '../fixtures/words';
 import database from '../../firebase/firebase';
 
@@ -80,6 +88,22 @@ test('should setup remove word action object', () => {
     expect(action).toEqual({
         type: 'REMOVE_WORD',
         id
+    });
+});
+
+test('should remove word from database', (done) => {
+    const id = words[1].id;
+    const store = createMockStore({});
+    store.dispatch(startRemoveWord({ id })).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_WORD',
+            id
+        });
+        return database.ref(`words/${id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val()).toBeFalsy();
+        done();
     });
 });
 
