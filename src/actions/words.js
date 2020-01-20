@@ -46,6 +46,14 @@ export const editWord = (id, updates) => ({
     updates
 });
 
+export const startEditWord = (id, updates) => {
+    return (dispatch) => {
+        return database.ref(`words/${id}`).update(updates).then(() => {
+            dispatch(editWord(id, updates));
+        })
+    };
+};
+
 // SET_WORDS
 export const setWords = (words) => ({
     type: 'SET_WORDS',

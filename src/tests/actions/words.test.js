@@ -7,7 +7,8 @@ import {
     removeWord, 
     setWords, 
     startSetWords, 
-    startRemoveWord 
+    startRemoveWord, 
+    startEditWord
 } from '../../actions/words';
 import words from '../fixtures/words';
 import database from '../../firebase/firebase';
@@ -120,6 +121,29 @@ test('should setup edit word action object', () => {
             source,
             destination
         }
+    });
+});
+
+test('should update word in database', (done) => {
+    const id = words[0].id;
+    const updates = {
+        source: 'nema',
+        destination: 'es gibt nicht'
+    }; 
+
+    const store = createMockStore({});
+    store.dispatch(startEditWord(id, updates)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'EDIT_WORD',
+            id,
+            updates
+        });
+        return database.ref(`words/${id}`).once('value');
+    }).then((snapshot) => {
+        expect(snapshot.val().source).toBe(updates.source);
+        expect(snapshot.val().destination).toBe(updates.destination);
+        done();
     });
 });
 

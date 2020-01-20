@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WordForm from './WordForm';
-import { editWord, startRemoveWord } from '../actions/words';
+import { startEditWord, startRemoveWord } from '../actions/words';
 
 export class EditWordPage extends React.Component {
     onSubmit = (word) => {
-        this.props.editWord(this.props.word.id, word);
+        this.props.startEditWord(this.props.word.id, word);
         this.props.history.push('/');
     };
     onRemove = (id) => {
@@ -31,7 +31,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-    editWord: (id, word) => dispatch(editWord(id, word)),
+    startEditWord: (id, word) => dispatch(startEditWord(id, word)),
     startRemoveWord: (data) => dispatch(startRemoveWord(data))
 });
 
