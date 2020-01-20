@@ -37,3 +37,26 @@ export const editWord = (id, updates) => ({
     id,
     updates
 });
+
+// SET_WORDS
+export const setWords = (words) => ({
+    type: 'SET_WORDS',
+    words
+});
+
+export const startSetWords = () => {
+    return (dispatch) => {
+        return database.ref('words').once('value').then((snapshot) => {
+            const words = [];
+
+            snapshot.forEach((childSnapshot) => {
+                words.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+
+            dispatch(setWords(words));
+        });
+    };
+};

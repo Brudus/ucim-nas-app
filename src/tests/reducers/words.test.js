@@ -64,3 +64,12 @@ test('should not edit word if id not found', () => {
     const state = wordsReducer(words, action);
     expect(state).toEqual(words);
 });
+
+test('should set words', () => {
+    const action = {
+        type: 'SET_WORDS',
+        words: [words[1]]
+    };
+    const state = wordsReducer(words, action);
+    expect(state).toEqual([words[1]]);
+});

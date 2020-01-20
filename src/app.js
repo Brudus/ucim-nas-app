@@ -6,6 +6,8 @@ import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/style.scss';
 
+import { startSetWords } from './actions/words';
+
 const store = configureStore();
 
 const jsx = (
@@ -14,4 +16,9 @@ const jsx = (
     </Provider>
 );
 
-ReactDOM.render(jsx, document.getElementById('app'));
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
+store.dispatch(startSetWords()).then(() => {
+    ReactDOM.render(jsx, document.getElementById('app'));
+})
+

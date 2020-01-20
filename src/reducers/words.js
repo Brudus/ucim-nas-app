@@ -19,6 +19,8 @@ export default (state = wordsReducerDefaultState, action) => {
                     return word;
                 }
             });
+        case 'SET_WORDS':
+            return action.words;
         default:
             return state;
      }
