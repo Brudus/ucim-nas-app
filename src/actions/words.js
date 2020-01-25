@@ -8,7 +8,8 @@ export const addWord = (word) => ({
 });
 
 export const startAddWord = (wordData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
         const {
             source = '', 
             destination= '', 
@@ -16,7 +17,7 @@ export const startAddWord = (wordData = {}) => {
         } = wordData;
         const word = { source, destination, repeatAt, factor: 1 };
         
-        return database.ref('words').push(word).then((ref) => {
+        return database.ref(`users/${uid}/words`).push(word).then((ref) => {
             dispatch(addWord({
                 id: ref.key,
                 ...word
@@ -32,8 +33,9 @@ export const removeWord = ({ id } = {}) => ({
 });
 
 export const startRemoveWord = ({ id } = {}) => {
-    return (dispatch) => {
-        return database.ref(`words/${id}`).remove().then(() => {
+    return (dispatch,getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/words/${id}`).remove().then(() => {
             dispatch(removeWord({ id }));
         });
     };
@@ -47,8 +49,9 @@ export const editWord = (id, updates) => ({
 });
 
 export const startEditWord = (id, updates) => {
-    return (dispatch) => {
-        return database.ref(`words/${id}`).update(updates).then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/words/${id}`).update(updates).then(() => {
             dispatch(editWord(id, updates));
         })
     };
@@ -61,8 +64,9 @@ export const setWords = (words) => ({
 });
 
 export const startSetWords = () => {
-    return (dispatch) => {
-        return database.ref('words').once('value').then((snapshot) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/words`).once('value').then((snapshot) => {
             const words = [];
 
             snapshot.forEach((childSnapshot) => {

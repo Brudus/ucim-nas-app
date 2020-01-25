@@ -13,6 +13,8 @@ import {
 import words from '../fixtures/words';
 import database from '../../firebase/firebase';
 
+const uid = 'thisismytestuid';
+const defaultAuthState = { auth: { uid }};
 const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
@@ -20,7 +22,7 @@ beforeEach((done) => {
     words.forEach(({ id, source, destination, factor, repeatAt }) => {
         wordData[id] = { source, destination, factor, repeatAt };
     });
-    database.ref('words').set(wordData).then(() => done());
+    database.ref(`users/${uid}/words`).set(wordData).then(() => done());
 });
 
 test('should setup add word object with provided values', () => {    
@@ -32,7 +34,7 @@ test('should setup add word object with provided values', () => {
 });
 
 test('should add word to database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const wordData = {
         source: 'Karte',
         destination: 'karta',
@@ -50,7 +52,7 @@ test('should add word to database and store', (done) => {
             }
         });
 
-        return database.ref(`words/${actions[0].word.id}`).once('value');
+        return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual({factor: 1, ...wordData});
         done();
@@ -58,7 +60,7 @@ test('should add word to database and store', (done) => {
 });
 
 test('should add word with defaults to database and store', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     const wordDefaults = {        
         source: '',
         destination: '',
@@ -76,7 +78,7 @@ test('should add word with defaults to database and store', (done) => {
             }
         });
 
-        return database.ref(`words/${actions[0].word.id}`).once('value');
+        return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual({factor: 1, ...wordDefaults});
         done();
@@ -94,14 +96,14 @@ test('should setup remove word action object', () => {
 
 test('should remove word from database', (done) => {
     const id = words[1].id;
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     store.dispatch(startRemoveWord({ id })).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({
             type: 'REMOVE_WORD',
             id
         });
-        return database.ref(`words/${id}`).once('value');
+        return database.ref(`users/${uid}/words/${id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val()).toBeFalsy();
         done();
@@ -131,7 +133,7 @@ test('should update word in database', (done) => {
         destination: 'es gibt nicht'
     }; 
 
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthState);
     store.dispatch(startEditWord(id, updates)).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({
@@ -139,7 +141,7 @@ test('should update word in database', (done) => {
             id,
             updates
         });
-        return database.ref(`words/${id}`).once('value');
+        return database.ref(`users/${uid}/words/${id}`).once('value');
     }).then((snapshot) => {
         expect(snapshot.val().source).toBe(updates.source);
         expect(snapshot.val().destination).toBe(updates.destination);
@@ -156,7 +158,7 @@ test('should setup set word action object with data', () => {
 });
 
 test('should fetch words from database', (done) => {
-    const store = createMockStore({});
+    const store = createMockStore(defaultAuthStateu);
     store.dispatch(startSetWords()).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({
