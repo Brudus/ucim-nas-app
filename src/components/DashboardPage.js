@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const DashboardPage = () => (
+export const DashboardPage = ({ startStudy }) => (
     <div>
-        <p>You are logged in!</p>
+        <Link to={`/study`}>Study now</Link>
     </div>
 );
 

@@ -2,8 +2,10 @@
 
 exports[`should render DashboardPage 1`] = `
 <div>
-  <p>
-    You are logged in!
-  </p>
+  <Link
+    to="/study"
+  >
+    Study now
+  </Link>
 </div>
 `;

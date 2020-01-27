@@ -8,6 +8,7 @@ import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
 import WordCatalogPage from '../components/WordCatalogPage';
+import StudyPage from '../components/StudyPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -23,6 +24,7 @@ const AppRouter = () => (
                 <PrivateRoute path="/create" component={AddWordPage} />
                 <PrivateRoute path="/edit/:id" component={EditWordPage} />
                 <PrivateRoute path="/help" component={HelpPage} />
+                <PrivateRoute path="/study" component={StudyPage} />
                 <Route component={NotFoundPage} />
             </Switch>
         </div>

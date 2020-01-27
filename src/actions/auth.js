@@ -1,4 +1,4 @@
-import { firebase, emailAuthProvider } from '../firebase/firebase';
+import { firebase } from '../firebase/firebase';
 
 export const login = (uid) => ({
     type: 'LOGIN',
