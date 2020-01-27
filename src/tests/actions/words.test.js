@@ -158,7 +158,7 @@ test('should setup set word action object with data', () => {
 });
 
 test('should fetch words from database', (done) => {
-    const store = createMockStore(defaultAuthStateu);
+    const store = createMockStore(defaultAuthState);
     store.dispatch(startSetWords()).then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual({

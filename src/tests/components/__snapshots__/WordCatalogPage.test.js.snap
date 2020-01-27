@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render WordCatalogPage 1`] = `
+<div>
+  <Connect(WordsSummary) />
+  <Connect(WordListFilters) />
+  <Connect(WordList) />
+</div>
+`;

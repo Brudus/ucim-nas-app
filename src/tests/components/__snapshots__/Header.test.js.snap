@@ -13,6 +13,12 @@ exports[`should render Header correctly 1`] = `
   </NavLink>
   <NavLink
     activeClassName="is-active"
+    to="/catalog"
+  >
+    Catalog
+  </NavLink>
+  <NavLink
+    activeClassName="is-active"
     to="/create"
   >
     Add Word

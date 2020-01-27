@@ -7,6 +7,7 @@ import EditWordPage from '../components/EditWordPage';
 import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginPage from '../components/LoginPage';
+import WordCatalogPage from '../components/WordCatalogPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -18,6 +19,7 @@ const AppRouter = () => (
             <Switch>        
                 <PublicRoute path="/" component={LoginPage} exact={true} />
                 <PrivateRoute path="/dashboard" component={DashboardPage} />
+                <PrivateRoute path="/catalog" component={WordCatalogPage} />
                 <PrivateRoute path="/create" component={AddWordPage} />
                 <PrivateRoute path="/edit/:id" component={EditWordPage} />
                 <PrivateRoute path="/help" component={HelpPage} />

@@ -2,8 +2,8 @@
 
 exports[`should render DashboardPage 1`] = `
 <div>
-  <Connect(WordsSummary) />
-  <Connect(WordListFilters) />
-  <Connect(WordList) />
+  <p>
+    You are logged in!
+  </p>
 </div>
 `;
