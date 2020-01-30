@@ -19,8 +19,8 @@ const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
     const wordData = {};
-    words.forEach(({ id, source, destination, factor, repeatAt }) => {
-        wordData[id] = { source, destination, factor, repeatAt };
+    words.forEach(({ id, source, destination, easeFactor, repeatAt, interval, reps }) => {
+        wordData[id] = { source, destination, easeFactor, repeatAt, interval, reps };
     });
     database.ref(`users/${uid}/words`).set(wordData).then(() => done());
 });
@@ -47,14 +47,16 @@ test('should add word to database and store', (done) => {
             type: 'ADD_WORD',
             word: {
                 id: expect.any(String),
-                factor: 1,
+                easeFactor: 2.5,
+                reps: 0,
+                interval: 0,
                 ...wordData
             }
         });
 
         return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toEqual({factor: 1, ...wordData});
+        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, ...wordData});
         done();
     });
 });
@@ -73,14 +75,16 @@ test('should add word with defaults to database and store', (done) => {
             type: 'ADD_WORD',
             word: {
                 id: expect.any(String),
-                factor: 1,
+                easeFactor: 2.5,
+                reps: 0,
+                interval: 0,
                 ...wordDefaults        
             }
         });
 
         return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toEqual({factor: 1, ...wordDefaults});
+        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, ...wordDefaults});
         done();
     });
 });

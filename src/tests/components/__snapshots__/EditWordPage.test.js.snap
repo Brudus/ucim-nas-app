@@ -7,9 +7,11 @@ exports[`should render EditWordPage correctly 1`] = `
     word={
       Object {
         "destination": "nisam",
-        "factor": 1.5,
+        "easeFactor": 1.5,
         "id": "2",
+        "interval": 2,
         "repeatAt": 1024,
+        "reps": 1,
         "source": "bin ich nicht",
       }
     }

@@ -11,8 +11,10 @@ test('should add word', () => {
         id: '4',
         source: 'neu',
         destination: 'novo',
-        factor: 1,
-        repeatAt: 2048
+        easeFactor: 2.5,
+        repeatAt: 2048,
+        interval: 0,
+        reps: 0
     };
     const action = {
         type: 'ADD_WORD',

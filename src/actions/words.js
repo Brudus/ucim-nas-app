@@ -12,9 +12,12 @@ export const startAddWord = (wordData = {}) => {
         const {
             source = '', 
             destination= '', 
-            repeatAt = 0
+            repeatAt = 0,
+            interval = 0,
+            reps = 0,
+            easeFactor = 2.5
         } = wordData;
-        const word = { source, destination, repeatAt, factor: 1 };
+        const word = { source, destination, repeatAt, interval, reps, easeFactor };
         
         return database.ref(`users/${uid}/words`).push(word).then((ref) => {
             dispatch(addWord({
