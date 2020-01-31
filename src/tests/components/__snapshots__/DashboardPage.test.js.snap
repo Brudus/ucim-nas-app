@@ -9,3 +9,13 @@ exports[`should render DashboardPage 1`] = `
   </Link>
 </div>
 `;
+
+exports[`should render DashboardPage without due words 1`] = `
+<div>
+  <button
+    disabled={true}
+  >
+    Study now
+  </button>
+</div>
+`;

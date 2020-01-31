@@ -11,6 +11,10 @@ export class StudyPage extends React.Component {
             words: props.words,
             showAnswer: false
         };
+
+        if (this.props.words.length === 0) {
+            this.props.history.push('/');
+        }
     };
 
     onShowAnswer = () => {
@@ -55,7 +59,6 @@ export class StudyPage extends React.Component {
         const newWords = currentWord.interval === 0 
             ? words.push(words.splice(words.indexOf(element), 1)[0]) 
             : words.slice(1);
-        console.log('New words:', newWords);
         this.setState(() => ({ words: newWords, currentWord: newWords[0], showAnswer: false }));
         this.props.startEditWord(currentWord.id, {
             repeatAt: currentWord.repeatAt,
@@ -81,29 +84,25 @@ export class StudyPage extends React.Component {
                         <StudySelectionOption 
                             grade={0} 
                             key={0}
-                            text="Again" 
-                            timeText="<1m"
+                            text="Again"
                             calculateNewSchedule={this.calculateNewSchedule} 
                         />
                         <StudySelectionOption 
                             grade={3} 
                             key={3}
-                            text="Hard" 
-                            timeText="<10m"
+                            text="Hard"
                             calculateNewSchedule={this.calculateNewSchedule} 
                         />
                         <StudySelectionOption 
                             grade={4} 
                             key={4}
-                            text="Good" 
-                            timeText="1d"
+                            text="Good"
                             calculateNewSchedule={this.calculateNewSchedule} 
                         />
                         <StudySelectionOption 
                             grade={5}
                             key={5} 
-                            text="Easy" 
-                            timeText="4d"
+                            text="Easy"
                             calculateNewSchedule={this.calculateNewSchedule} 
                         />
                     </div>
@@ -116,7 +115,7 @@ export class StudyPage extends React.Component {
 };
 
 const mapStateToProps = (state) => ({
-    words: state.words
+    words: state.words.filter((word) => word.repeatAt <= new Date())
 });
 
 const mapDispatchToProps = (dispatch) => ({

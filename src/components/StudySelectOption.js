@@ -8,7 +8,6 @@ export default class StudySelectionOption extends React.Component {
     render() {
         return (
             <div>
-                <p>{this.props.timeText}</p>
                 <button onClick={this.handleClick}>{this.props.text}</button>
             </div>
         );

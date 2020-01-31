@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import filterWordsDue from '../selectors/words-due';
 
-export const DashboardPage = ({ startStudy }) => (
+export const DashboardPage = ({ dueWordsCount }) => (
     <div>
-        <Link to={`/study`}>Study now</Link>
+        {dueWordsCount > 0 ? <Link to={`/study`}>Study now</Link> : <button disabled>Study now</button>}
     </div>
 );
 
-export default DashboardPage;
+const mapStateToProps = (state) => ({
+    dueWordsCount: filterWordsDue(state.words)
+});
+
+export default connect(mapStateToProps)(DashboardPage);
