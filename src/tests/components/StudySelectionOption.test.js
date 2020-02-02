@@ -22,6 +22,3 @@ test('should call calculateNewSchedule with grade when button is pressed', () =>
     wrapper.find('button').simulate('click');
     expect(calculateNewSchedule).toHaveBeenLastCalledWith(grade);
 });
-
-// Test if handle click calls calculateNewSchedule
-// Test if rendered looks the same as it should

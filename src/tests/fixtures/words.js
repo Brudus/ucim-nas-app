@@ -4,8 +4,8 @@ export default [{
     destination: 'dobro',
     easeFactor: 2.5,
     repeatAt: 0,
-    interval: 0,
-    reps: 0
+    interval: 4,
+    reps: 3
 }, {
     id: '2',
     source: 'bin ich nicht',

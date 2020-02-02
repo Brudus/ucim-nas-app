@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render StudyPage with words 1`] = `
+<div>
+  <h2>
+    Study!
+  </h2>
+  <p>
+    gut
+  </p>
+  <button
+    onClick={[Function]}
+  >
+    Show answer
+  </button>
+</div>
+`;
+
+exports[`should set answer state on button click 1`] = `
+<div>
+  <h2>
+    Study!
+  </h2>
+  <p>
+    gut
+  </p>
+  <p>
+    dobro
+  </p>
+  <div>
+    <StudySelectionOption
+      calculateNewSchedule={[Function]}
+      grade={0}
+      key="0"
+      text="Again"
+    />
+    <StudySelectionOption
+      calculateNewSchedule={[Function]}
+      grade={3}
+      key="3"
+      text="Hard"
+    />
+    <StudySelectionOption
+      calculateNewSchedule={[Function]}
+      grade={4}
+      key="4"
+      text="Good"
+    />
+    <StudySelectionOption
+      calculateNewSchedule={[Function]}
+      grade={5}
+      key="5"
+      text="Easy"
+    />
+  </div>
+</div>
+`;

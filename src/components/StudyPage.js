@@ -22,16 +22,19 @@ export class StudyPage extends React.Component {
     };
 
     calculateNewSchedule = (grade) => {
+        if (grade > 5 || grade < 0) {
+            return;
+        }
+
         let currentWord = this.state.currentWord
         const oldEF = currentWord.easeFactor;
-        let nextDate = new Date();
-        
-        if (grade < 3 || grade > 5) {
+        let nextDate = new Date(Date.now());
+        currentWord.easeFactor = Math.round((Math.max(oldEF - 0.8 + 0.28 * grade - 0.02 * grade * grade, 1.3) + Number.EPSILON) * 100) / 100;
+
+        if (grade < 3) {
             currentWord.reps = 0;
             currentWord.interval = 0;
         } else {
-             currentWord.easeFactor = Math.max(oldEF - 0.8 + 0.28 * grade - 0.02 * grade * grade, 1.3);
-
             currentWord.reps += 1;
 
             switch (currentWord.reps) {
@@ -51,14 +54,20 @@ export class StudyPage extends React.Component {
             currentWord.interval = 0;
         }
 
-        const today = new Date();
+        const today = new Date(Date.now());
         nextDate.setDate(today.getDate() + currentWord.interval);
         currentWord.repeatAt = nextDate.getTime();
 
         const words = this.state.words;
-        const newWords = currentWord.interval === 0 
-            ? words.push(words.splice(words.indexOf(element), 1)[0]) 
-            : words.slice(1);
+        
+        let newWords;
+        if (currentWord.interval === 0) {
+            words.push(words.splice(words.indexOf(currentWord), 1)[0]);
+            newWords = words;
+        } else {
+            newWords = words.slice(1);
+        }
+        
         this.setState(() => ({ words: newWords, currentWord: newWords[0], showAnswer: false }));
         this.props.startEditWord(currentWord.id, {
             repeatAt: currentWord.repeatAt,

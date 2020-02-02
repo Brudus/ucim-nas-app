@@ -14,10 +14,10 @@ exports[`should render WordList with words 1`] = `
     destination="dobro"
     easeFactor={2.5}
     id="1"
-    interval={0}
+    interval={4}
     key="1"
     repeatAt={0}
-    reps={0}
+    reps={3}
     source="gut"
   />
   <WordListItem
