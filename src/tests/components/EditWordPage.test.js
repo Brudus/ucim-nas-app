@@ -25,12 +25,12 @@ test('should render EditWordPage correctly', () => {
 
 test('should handle startEditWord', () => {
     wrapper.find('WordForm').prop('onSubmit')(words[1]);
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/catalog');
     expect(startEditWord).toHaveBeenLastCalledWith(words[1].id, words[1]);
 });
 
 test('should handle startRemoveWord', () => {
     wrapper.find('button').simulate('click');
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/catalog');
     expect(startRemoveWord).toHaveBeenLastCalledWith({ id: words[1].id });
 });

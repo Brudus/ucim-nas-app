@@ -6,11 +6,11 @@ import { startEditWord, startRemoveWord } from '../actions/words';
 export class EditWordPage extends React.Component {
     onSubmit = (word) => {
         this.props.startEditWord(this.props.word.id, word);
-        this.props.history.push('/');
+        this.props.history.push('/catalog');
     };
     onRemove = (id) => {
         this.props.startRemoveWord({ id: this.props.word.id });
-        this.props.history.push('/');
+        this.props.history.push('/catalog');
     };
 
     render() {
