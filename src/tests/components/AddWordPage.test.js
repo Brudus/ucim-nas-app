@@ -17,6 +17,5 @@ test('should render AddWordPage correctly', () => {
 
 test('should handle onSubmit', () => {
     wrapper.find('WordForm').prop('onSubmit')(words[1]);
-    expect(history.push).toHaveBeenLastCalledWith('/');
     expect(startAddWord).toHaveBeenLastCalledWith(words[1]);
 });

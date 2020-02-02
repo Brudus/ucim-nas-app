@@ -6,7 +6,6 @@ import { startAddWord } from '../actions/words';
 export class AddWordPage extends React.Component {
     onSubmit = (word) => {
         this.props.startAddWord(word);
-        this.props.history.push('/');
     };
 
     render() {

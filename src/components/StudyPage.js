@@ -29,6 +29,8 @@ export class StudyPage extends React.Component {
         let currentWord = this.state.currentWord
         const oldEF = currentWord.easeFactor;
         let nextDate = new Date(Date.now());
+        // Rounding here is required because of floating point arithmetic.
+        // See: https://floating-point-gui.de/
         currentWord.easeFactor = Math.round((Math.max(oldEF - 0.8 + 0.28 * grade - 0.02 * grade * grade, 1.3) + Number.EPSILON) * 100) / 100;
 
         if (grade < 3) {

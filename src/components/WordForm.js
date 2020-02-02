@@ -35,6 +35,11 @@ export default class WordForm extends React.Component {
                 source: this.state.source,
                 repeatAt: this.state.repeatAt ? this.state.repeatAt : Date.now()
             });
+            this.setState(() => ({
+                destination: '',
+                source: '',
+                repeatAt: undefined
+            }));
         }
     };
 
