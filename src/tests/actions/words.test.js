@@ -19,8 +19,8 @@ const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
     const wordData = {};
-    words.forEach(({ id, source, destination, easeFactor, repeatAt, interval, reps }) => {
-        wordData[id] = { source, destination, easeFactor, repeatAt, interval, reps };
+    words.forEach(({ id, source, destination, easeFactor, repeatAt, interval, reps, easeFactorInverted, repeatAtInverted, intervalInverted, repsInverted }) => {
+        wordData[id] = { source, destination, easeFactor, repeatAt, interval, reps, easeFactorInverted, repeatAtInverted, intervalInverted, repsInverted };
     });
     database.ref(`users/${uid}/words`).set(wordData).then(() => done());
 });
@@ -38,7 +38,8 @@ test('should add word to database and store', (done) => {
     const wordData = {
         source: 'Karte',
         destination: 'karta',
-        repeatAt: 1000
+        repeatAt: 1000,
+        repeatAtInverted: 2000
     };
 
     store.dispatch(startAddWord(wordData)).then(() => {
@@ -50,13 +51,16 @@ test('should add word to database and store', (done) => {
                 easeFactor: 2.5,
                 reps: 0,
                 interval: 0,
+                easeFactorInverted: 2.5,
+                repsInverted: 0,
+                intervalInverted: 0,
                 ...wordData
             }
         });
 
         return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, ...wordData});
+        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, easeFactorInverted: 2.5, repsInverted: 0, intervalInverted: 0, ...wordData});
         done();
     });
 });
@@ -66,7 +70,8 @@ test('should add word with defaults to database and store', (done) => {
     const wordDefaults = {        
         source: '',
         destination: '',
-        repeatAt: 0
+        repeatAt: 0,
+        repeatAtInverted: 0
     };
 
     store.dispatch(startAddWord({})).then(() => {
@@ -78,13 +83,16 @@ test('should add word with defaults to database and store', (done) => {
                 easeFactor: 2.5,
                 reps: 0,
                 interval: 0,
+                easeFactorInverted: 2.5,
+                repsInverted: 0,
+                intervalInverted: 0,
                 ...wordDefaults        
             }
         });
 
         return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, ...wordDefaults});
+        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, easeFactorInverted: 2.5, repsInverted: 0, intervalInverted: 0, ...wordDefaults});
         done();
     });
 });

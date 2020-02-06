@@ -7,6 +7,7 @@ export default class WordForm extends React.Component {
             destination: props.word ? props.word.destination : '',
             source: props.word ? props.word.source : '',
             repeatAt: props.word ? props.word.repeatAt : undefined,
+            repeatAtInverted: props.word ? props.word.repeatAtInverted : undefined,
             error: ''
         };
     }
@@ -33,12 +34,14 @@ export default class WordForm extends React.Component {
             this.props.onSubmit({
                 destination: this.state.destination,
                 source: this.state.source,
-                repeatAt: this.state.repeatAt ? this.state.repeatAt : Date.now()
+                repeatAt: this.state.repeatAt ? this.state.repeatAt : Date.now(),
+                repeatAtInverted: this.state.repeatAtInverted ? this.state.repeatAtInverted : Date.now()
             });
             this.setState(() => ({
                 destination: '',
                 source: '',
-                repeatAt: undefined
+                repeatAt: undefined,
+                repeatAtInverted: undefined
             }));
         }
     };

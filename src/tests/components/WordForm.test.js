@@ -51,6 +51,7 @@ test('should call onSubmit prop for valid from submission', () => {
     expect(onSubmitSpy).toHaveBeenLastCalledWith({
         destination: words[1].destination,
         source: words[1].source,
-        repeatAt: words[1].repeatAt
+        repeatAt: words[1].repeatAt,
+        repeatAtInverted: words[1].repeatAtInverted
     });
 });

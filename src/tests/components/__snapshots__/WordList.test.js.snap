@@ -13,31 +13,43 @@ exports[`should render WordList with words 1`] = `
   <WordListItem
     destination="dobro"
     easeFactor={2.5}
+    easeFactorInverted={2.5}
     id="1"
     interval={4}
+    intervalInverted={3}
     key="1"
     repeatAt={0}
+    repeatAtInverted={0}
     reps={3}
+    repsInverted={2}
     source="gut"
   />
   <WordListItem
     destination="nisam"
     easeFactor={1.5}
+    easeFactorInverted={1.5}
     id="2"
     interval={2}
+    intervalInverted={2}
     key="2"
     repeatAt={1024}
+    repeatAtInverted={1024}
     reps={1}
+    repsInverted={1}
     source="bin ich nicht"
   />
   <WordListItem
     destination="hvala"
     easeFactor={3}
+    easeFactorInverted={3}
     id="3"
     interval={1}
+    intervalInverted={1}
     key="3"
     repeatAt={-1000}
+    repeatAtInverted={-1000}
     reps={1}
+    repsInverted={1}
     source="danke"
   />
 </div>

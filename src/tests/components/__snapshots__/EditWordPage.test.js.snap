@@ -8,10 +8,14 @@ exports[`should render EditWordPage correctly 1`] = `
       Object {
         "destination": "nisam",
         "easeFactor": 1.5,
+        "easeFactorInverted": 1.5,
         "id": "2",
         "interval": 2,
+        "intervalInverted": 2,
         "repeatAt": 1024,
+        "repeatAtInverted": 1024,
         "reps": 1,
+        "repsInverted": 1,
         "source": "bin ich nicht",
       }
     }
