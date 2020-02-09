@@ -6,7 +6,9 @@ import { StudyPage } from '../../components/StudyPage';
 const startDate = 1487076708000;
 const dayInMs = 1000 * 60 * 60 * 24;
 const globalDate = Date;
-let startEditWord, history, wordsWOReference;
+const defaultWordsMapped = words.map((word) => ({...word, type: 'default'}));
+const invertedWordsMapped = words.map((word) => ({...word, type: 'inverted'}));
+let startEditWord, history, wordsWOReference, invertedWordsWOReference;
 
 beforeAll(() => {
     Date.now = jest.fn(() => startDate);
@@ -15,7 +17,8 @@ beforeAll(() => {
 beforeEach(() => {
     startEditWord = jest.fn();
     history = { push: jest.fn() };
-    wordsWOReference = JSON.parse(JSON.stringify(words));
+    wordsWOReference = JSON.parse(JSON.stringify(defaultWordsMapped));
+    invertedWordsWOReference = JSON.parse(JSON.stringify(invertedWordsMapped));
 });
 
 afterAll(() => {
@@ -31,8 +34,8 @@ test('should render StudyPage with words', () => {
         />
     );
     expect(wrapper.state('showAnswer')).toBe(false);
-    expect(wrapper.state('currentWord')).toEqual(words[0]);
-    expect(wrapper.state('words')).toEqual(words);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[0]);
+    expect(wrapper.state('words')).toEqual(defaultWordsMapped);
     expect(wrapper).toMatchSnapshot();
 });
 
@@ -60,6 +63,7 @@ test('should set answer state on button click', () => {
     expect(wrapper).toMatchSnapshot();
 });
 
+// Tests for default case 
 test('should calculate schedule correctly and put word at end of list for grade 0', () => {
     const wrapper = shallow(
         <StudyPage 
@@ -73,11 +77,11 @@ test('should calculate schedule correctly and put word at end of list for grade 
     wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(0);
     expect(stateCurrentWord.interval).toBe(0);
     expect(stateCurrentWord.reps).toBe(0);
-    expect(stateCurrentWord.easeFactor).toBe(words[0].easeFactor - 0.8);
+    expect(stateCurrentWord.easeFactor).toBe(defaultWordsMapped[0].easeFactor - 0.8);
     expect(stateCurrentWord.repeatAt).toEqual(1487076708000);
-    expect(wrapper.state('currentWord')).toEqual(words[1]);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[1]);
     expect(wrapper.state('showAnswer')).toBe(false);
-    expect(wrapper.state('words')).toEqual([words[1], words[2], stateCurrentWord]);
+    expect(wrapper.state('words')).toEqual([defaultWordsMapped[1], defaultWordsMapped[2], stateCurrentWord]);
     expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
@@ -98,12 +102,12 @@ test('should calculate schedule correctly and put word at end of list for grade 
     const stateCurrentWord = wrapper.state('currentWord');
     wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(3);
     expect(stateCurrentWord.interval).toBe(0);
-    expect(stateCurrentWord.reps).toBe(words[0].reps + 1);
+    expect(stateCurrentWord.reps).toBe(defaultWordsMapped[0].reps + 1);
     expect(stateCurrentWord.easeFactor).toBe(2.36);
     expect(stateCurrentWord.repeatAt).toEqual(1487076708000);
-    expect(wrapper.state('currentWord')).toEqual(words[1]);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[1]);
     expect(wrapper.state('showAnswer')).toBe(false);
-    expect(wrapper.state('words')).toEqual([words[1], words[2], stateCurrentWord]);
+    expect(wrapper.state('words')).toEqual([defaultWordsMapped[1], defaultWordsMapped[2], stateCurrentWord]);
     expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
@@ -124,12 +128,12 @@ test('should calculate schedule correctly and remove word from list for grade 4'
     const stateCurrentWord = wrapper.state('currentWord');
     wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(4);
     expect(stateCurrentWord.interval).toBe(8);
-    expect(stateCurrentWord.reps).toBe(words[0].reps + 1);
-    expect(stateCurrentWord.easeFactor).toBe(words[0].easeFactor);
+    expect(stateCurrentWord.reps).toBe(defaultWordsMapped[0].reps + 1);
+    expect(stateCurrentWord.easeFactor).toBe(defaultWordsMapped[0].easeFactor);
     expect(stateCurrentWord.repeatAt).toEqual(1487076708000 + stateCurrentWord.interval * dayInMs);
-    expect(wrapper.state('currentWord')).toEqual(words[1]);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[1]);
     expect(wrapper.state('showAnswer')).toBe(false);
-    expect(wrapper.state('words')).toEqual([words[1], words[2]]);
+    expect(wrapper.state('words')).toEqual([defaultWordsMapped[1], defaultWordsMapped[2]]);
     expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
@@ -150,12 +154,12 @@ test('should calculate schedule correctly and remove word from list for grade 5'
     const stateCurrentWord = wrapper.state('currentWord');
     wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(5);
     expect(stateCurrentWord.interval).toBe(8);
-    expect(stateCurrentWord.reps).toBe(words[0].reps + 1);
+    expect(stateCurrentWord.reps).toBe(defaultWordsMapped[0].reps + 1);
     expect(stateCurrentWord.easeFactor).toBe(2.6);
     expect(stateCurrentWord.repeatAt).toEqual(1487076708000 + stateCurrentWord.interval * dayInMs);
-    expect(wrapper.state('currentWord')).toEqual(words[1]);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[1]);
     expect(wrapper.state('showAnswer')).toBe(false);
-    expect(wrapper.state('words')).toEqual([words[1], words[2]]);
+    expect(wrapper.state('words')).toEqual([defaultWordsMapped[1], defaultWordsMapped[2]]);
     expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
@@ -175,12 +179,12 @@ test('should calculate schedule correctly and put word at end of list for incorr
     wrapper.find('button').simulate('click');
     const stateCurrentWord = wrapper.state('currentWord');
     wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(7);
-    expect(stateCurrentWord.interval).toBe(words[0].interval);
-    expect(stateCurrentWord.reps).toBe(words[0].reps);
-    expect(stateCurrentWord.easeFactor).toBe(words[0].easeFactor);
-    expect(stateCurrentWord.repeatAt).toEqual(words[0].repeatAt);
-    expect(wrapper.state('currentWord')).toEqual(words[0]);
-    expect(wrapper.state('words')).toEqual(words); 
+    expect(stateCurrentWord.interval).toBe(defaultWordsMapped[0].interval);
+    expect(stateCurrentWord.reps).toBe(defaultWordsMapped[0].reps);
+    expect(stateCurrentWord.easeFactor).toBe(defaultWordsMapped[0].easeFactor);
+    expect(stateCurrentWord.repeatAt).toEqual(defaultWordsMapped[0].repeatAt);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[0]);
+    expect(wrapper.state('words')).toEqual(defaultWordsMapped); 
 });
 
 test('should calculate schedule correctly and put word at end of list for incorrect grade 7', () => {
@@ -194,12 +198,155 @@ test('should calculate schedule correctly and put word at end of list for incorr
     wrapper.find('button').simulate('click');
     const stateCurrentWord = wrapper.state('currentWord');
     wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(7);
-    expect(stateCurrentWord.interval).toBe(words[0].interval);
-    expect(stateCurrentWord.reps).toBe(words[0].reps);
-    expect(stateCurrentWord.easeFactor).toBe(words[0].easeFactor);
-    expect(stateCurrentWord.repeatAt).toEqual(words[0].repeatAt);
-    expect(wrapper.state('currentWord')).toEqual(words[0]);
-    expect(wrapper.state('words')).toEqual(words); 
+    expect(stateCurrentWord.interval).toBe(defaultWordsMapped[0].interval);
+    expect(stateCurrentWord.reps).toBe(defaultWordsMapped[0].reps);
+    expect(stateCurrentWord.easeFactor).toBe(defaultWordsMapped[0].easeFactor);
+    expect(stateCurrentWord.repeatAt).toEqual(defaultWordsMapped[0].repeatAt);
+    expect(wrapper.state('currentWord')).toEqual(defaultWordsMapped[0]);
+    expect(wrapper.state('words')).toEqual(defaultWordsMapped); 
+});
+
+// Tests for inverted case
+test('should calculate schedule (inverted) correctly and put word at end of list for grade 0', () => {
+    const wrapper = shallow(
+        <StudyPage 
+            startEditWord={startEditWord} 
+            history={history} 
+            words={invertedWordsWOReference} 
+        />
+    );
+    wrapper.find('button').simulate('click');
+    const stateCurrentWord = wrapper.state('currentWord');
+    wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(0);
+    expect(stateCurrentWord.intervalInverted).toBe(0);
+    expect(stateCurrentWord.repsInverted).toBe(0);
+    expect(stateCurrentWord.easeFactorInverted).toBe(invertedWordsMapped[0].easeFactorInverted - 0.8);
+    expect(stateCurrentWord.repeatAtInverted).toEqual(1487076708000);
+    expect(wrapper.state('currentWord')).toEqual(invertedWordsMapped[1]);
+    expect(wrapper.state('showAnswer')).toBe(false);
+    expect(wrapper.state('words')).toEqual([invertedWordsMapped[1], invertedWordsMapped[2], stateCurrentWord]);
+    expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
+        repeatAtInverted: stateCurrentWord.repeatAtInverted,
+        intervalInverted: stateCurrentWord.intervalInverted,
+        repsInverted: stateCurrentWord.repsInverted,
+        easeFactorInverted: stateCurrentWord.easeFactorInverted
+    }); 
+});
+
+test('should calculate schedule (inverted) correctly and put word at end of list for grade 3', () => {
+    const wrapper = shallow( 
+        <StudyPage 
+            startEditWord={startEditWord} 
+            history={history} 
+            words={invertedWordsWOReference} 
+        />
+    );
+    wrapper.find('button').simulate('click');
+    const stateCurrentWord = wrapper.state('currentWord');
+    wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(3);
+    expect(stateCurrentWord.intervalInverted).toBe(0);
+    expect(stateCurrentWord.repsInverted).toBe(invertedWordsMapped[0].repsInverted + 1);
+    expect(stateCurrentWord.easeFactorInverted).toBe(2.36);
+    expect(stateCurrentWord.repeatAtInverted).toEqual(1487076708000);
+    expect(wrapper.state('currentWord')).toEqual(invertedWordsMapped[1]);
+    expect(wrapper.state('showAnswer')).toBe(false);
+    expect(wrapper.state('words')).toEqual([invertedWordsMapped[1], invertedWordsMapped[2], stateCurrentWord]);
+    expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
+        repeatAtInverted: stateCurrentWord.repeatAtInverted,
+        intervalInverted: stateCurrentWord.intervalInverted,
+        repsInverted: stateCurrentWord.repsInverted,
+        easeFactorInverted: stateCurrentWord.easeFactorInverted
+    });
+});
+
+test('should calculate schedule (inverted) correctly and remove word from list for grade 4', () => {
+    const wrapper = shallow( 
+        <StudyPage 
+            startEditWord={startEditWord} 
+            history={history} 
+            words={invertedWordsWOReference} 
+        />
+    );
+    wrapper.find('button').simulate('click');
+    const stateCurrentWord = wrapper.state('currentWord');
+    wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(4);
+    expect(stateCurrentWord.intervalInverted).toBe(5);
+    expect(stateCurrentWord.repsInverted).toBe(invertedWordsMapped[0].repsInverted + 1);
+    expect(stateCurrentWord.easeFactorInverted).toBe(invertedWordsMapped[0].easeFactorInverted);
+    expect(stateCurrentWord.repeatAtInverted).toEqual(1487076708000 + stateCurrentWord.intervalInverted * dayInMs);
+    expect(wrapper.state('currentWord')).toEqual(invertedWordsMapped[1]);
+    expect(wrapper.state('showAnswer')).toBe(false);
+    expect(wrapper.state('words')).toEqual([invertedWordsMapped[1], invertedWordsMapped[2]]);
+    expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
+        repeatAtInverted: stateCurrentWord.repeatAtInverted,
+        intervalInverted: stateCurrentWord.intervalInverted,
+        repsInverted: stateCurrentWord.repsInverted,
+        easeFactorInverted: stateCurrentWord.easeFactorInverted
+    });
+});
+
+test('should calculate schedule (inverted) correctly and remove word from list for grade 5', () => {
+    const wrapper = shallow( 
+        <StudyPage 
+            startEditWord={startEditWord} 
+            history={history} 
+            words={invertedWordsWOReference} 
+        />
+    );
+    wrapper.find('button').simulate('click');
+    const stateCurrentWord = wrapper.state('currentWord');
+    wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(5);
+    expect(stateCurrentWord.intervalInverted).toBe(6);
+    expect(stateCurrentWord.repsInverted).toBe(invertedWordsMapped[0].repsInverted + 1);
+    expect(stateCurrentWord.easeFactorInverted).toBe(2.6);
+    expect(stateCurrentWord.repeatAtInverted).toEqual(1487076708000 + stateCurrentWord.intervalInverted * dayInMs);
+    expect(wrapper.state('currentWord')).toEqual(invertedWordsMapped[1]);
+    expect(wrapper.state('showAnswer')).toBe(false);
+    expect(wrapper.state('words')).toEqual([invertedWordsMapped[1], invertedWordsMapped[2]]);
+    expect(startEditWord).toHaveBeenLastCalledWith(stateCurrentWord.id, {
+        repeatAtInverted: stateCurrentWord.repeatAtInverted,
+        intervalInverted: stateCurrentWord.intervalInverted,
+        repsInverted: stateCurrentWord.repsInverted,
+        easeFactorInverted: stateCurrentWord.easeFactorInverted
+    });
+});
+
+test('should calculate schedule (inverted) correctly and put word at end of list for incorrect grade -1', () => {
+    const wrapper = shallow(
+        <StudyPage 
+            startEditWord={startEditWord} 
+            history={history} 
+            words={invertedWordsWOReference} 
+        />
+    );
+    wrapper.find('button').simulate('click');
+    const stateCurrentWord = wrapper.state('currentWord');
+    wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(7);
+    expect(stateCurrentWord.intervalInverted).toBe(invertedWordsMapped[0].intervalInverted);
+    expect(stateCurrentWord.repsInverted).toBe(invertedWordsMapped[0].repsInverted);
+    expect(stateCurrentWord.easeFactorInverted).toBe(invertedWordsMapped[0].easeFactorInverted);
+    expect(stateCurrentWord.repeatAtInverted).toEqual(invertedWordsMapped[0].repeatAtInverted);
+    expect(wrapper.state('currentWord')).toEqual(invertedWordsMapped[0]);
+    expect(wrapper.state('words')).toEqual(invertedWordsMapped); 
+});
+
+test('should calculate schedule (inverted) correctly and put word at end of list for incorrect grade 7', () => {
+    const wrapper = shallow(
+        <StudyPage 
+            startEditWord={startEditWord} 
+            history={history} 
+            words={invertedWordsWOReference} 
+        />
+    );
+    wrapper.find('button').simulate('click');
+    const stateCurrentWord = wrapper.state('currentWord');
+    wrapper.find('StudySelectionOption').at(0).prop('calculateNewSchedule')(7);
+    expect(stateCurrentWord.intervalInverted).toBe(invertedWordsMapped[0].intervalInverted);
+    expect(stateCurrentWord.repsInverted).toBe(invertedWordsMapped[0].repsInverted);
+    expect(stateCurrentWord.easeFactorInverted).toBe(invertedWordsMapped[0].easeFactorInverted);
+    expect(stateCurrentWord.repeatAtInverted).toEqual(invertedWordsMapped[0].repeatAtInverted);
+    expect(wrapper.state('currentWord')).toEqual(invertedWordsMapped[0]);
+    expect(wrapper.state('words')).toEqual(invertedWordsMapped); 
 });
 
 test('should navigate to / when last word is learned', () => {

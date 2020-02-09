@@ -13,7 +13,11 @@ exports[`should render WordListItem correctly with word (in 2 days) 1`] = `
     bin ich nicht
   </h4>
   <p>
-    Next repetition: 
+    German -&gt; Serbian - Next repetition: 
+    in 2 days
+  </p>
+  <p>
+    Serbian -&gt; German - Next repetition: 
     in 2 days
   </p>
 </div>
@@ -32,7 +36,11 @@ exports[`should render WordListItem correctly with word (today) 1`] = `
     bin ich nicht
   </h4>
   <p>
-    Next repetition: 
+    German -&gt; Serbian - Next repetition: 
+    today
+  </p>
+  <p>
+    Serbian -&gt; German - Next repetition: 
     today
   </p>
 </div>
@@ -51,7 +59,11 @@ exports[`should render WordListItem correctly with word (tomorrow) 1`] = `
     bin ich nicht
   </h4>
   <p>
-    Next repetition: 
+    German -&gt; Serbian - Next repetition: 
+    tomorrow
+  </p>
+  <p>
+    Serbian -&gt; German - Next repetition: 
     tomorrow
   </p>
 </div>
@@ -70,7 +82,11 @@ exports[`should render WordListItem with word (now) 1`] = `
     gut
   </h4>
   <p>
-    Next repetition: 
+    German -&gt; Serbian - Next repetition: 
+    now
+  </p>
+  <p>
+    Serbian -&gt; German - Next repetition: 
     now
   </p>
 </div>

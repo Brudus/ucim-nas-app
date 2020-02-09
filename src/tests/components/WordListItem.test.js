@@ -11,7 +11,8 @@ test('should render WordListItem with word (now)', () => {
 test('should render WordListItem correctly with word (today)', () => {
     const halfADay = 0.5 * 1000 * 60 * 60 * 24;
     const repeatAt = Date.now() + halfADay;
-    const changedWord = {...words[1], repeatAt};
+    const repeatAtInverted = repeatAt;
+    const changedWord = {...words[1], repeatAt, repeatAtInverted};
     const wrapper = shallow(<WordListItem key={words[1].id} {...changedWord} />);
     expect(wrapper).toMatchSnapshot();
 });
@@ -19,7 +20,8 @@ test('should render WordListItem correctly with word (today)', () => {
 test('should render WordListItem correctly with word (tomorrow)', () => {
     const oneAndAHalfDay = 1.5 * 1000 * 60 * 60 * 24;
     const repeatAt = Date.now() + oneAndAHalfDay;
-    const changedWord = {...words[1], repeatAt};
+    const repeatAtInverted = repeatAt;
+    const changedWord = {...words[1], repeatAt, repeatAtInverted};
     const wrapper = shallow(<WordListItem key={words[1].id} {...changedWord} />);
     expect(wrapper).toMatchSnapshot();
 });
@@ -27,7 +29,8 @@ test('should render WordListItem correctly with word (tomorrow)', () => {
 test('should render WordListItem correctly with word (in 2 days)', () => {
     const twoAndAHalfADay = 2.5 * 1000 * 60 * 60 * 24;
     const repeatAt = Date.now() + twoAndAHalfADay;
-    const changedWord = {...words[1], repeatAt};
+    const repeatAtInverted = repeatAt;
+    const changedWord = {...words[1], repeatAt, repeatAtInverted};
     const wrapper = shallow(<WordListItem key={words[1].id} {...changedWord} />);
     expect(wrapper).toMatchSnapshot();
 });
