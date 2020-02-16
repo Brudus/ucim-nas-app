@@ -86,7 +86,8 @@ test('should calculate schedule correctly and put word at end of list for grade 
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
         reps: stateCurrentWord.reps,
-        easeFactor: stateCurrentWord.easeFactor
+        easeFactor: stateCurrentWord.easeFactor,
+        isNew: false
     }); 
 });
 
@@ -112,7 +113,8 @@ test('should calculate schedule correctly and put word at end of list for grade 
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
         reps: stateCurrentWord.reps,
-        easeFactor: stateCurrentWord.easeFactor
+        easeFactor: stateCurrentWord.easeFactor,
+        isNew: false
     });
 });
 
@@ -138,7 +140,8 @@ test('should calculate schedule correctly and remove word from list for grade 4'
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
         reps: stateCurrentWord.reps,
-        easeFactor: stateCurrentWord.easeFactor
+        easeFactor: stateCurrentWord.easeFactor,
+        isNew: false
     });
 });
 
@@ -164,7 +167,8 @@ test('should calculate schedule correctly and remove word from list for grade 5'
         repeatAt: stateCurrentWord.repeatAt,
         interval: stateCurrentWord.interval,
         reps: stateCurrentWord.reps,
-        easeFactor: stateCurrentWord.easeFactor
+        easeFactor: stateCurrentWord.easeFactor,
+        isNew: false
     });
 });
 
@@ -229,7 +233,8 @@ test('should calculate schedule (inverted) correctly and put word at end of list
         repeatAtInverted: stateCurrentWord.repeatAtInverted,
         intervalInverted: stateCurrentWord.intervalInverted,
         repsInverted: stateCurrentWord.repsInverted,
-        easeFactorInverted: stateCurrentWord.easeFactorInverted
+        easeFactorInverted: stateCurrentWord.easeFactorInverted,
+        isNewInverted: false
     }); 
 });
 
@@ -255,7 +260,8 @@ test('should calculate schedule (inverted) correctly and put word at end of list
         repeatAtInverted: stateCurrentWord.repeatAtInverted,
         intervalInverted: stateCurrentWord.intervalInverted,
         repsInverted: stateCurrentWord.repsInverted,
-        easeFactorInverted: stateCurrentWord.easeFactorInverted
+        easeFactorInverted: stateCurrentWord.easeFactorInverted,
+        isNewInverted: false
     });
 });
 
@@ -281,7 +287,8 @@ test('should calculate schedule (inverted) correctly and remove word from list f
         repeatAtInverted: stateCurrentWord.repeatAtInverted,
         intervalInverted: stateCurrentWord.intervalInverted,
         repsInverted: stateCurrentWord.repsInverted,
-        easeFactorInverted: stateCurrentWord.easeFactorInverted
+        easeFactorInverted: stateCurrentWord.easeFactorInverted,
+        isNewInverted: false
     });
 });
 
@@ -307,7 +314,8 @@ test('should calculate schedule (inverted) correctly and remove word from list f
         repeatAtInverted: stateCurrentWord.repeatAtInverted,
         intervalInverted: stateCurrentWord.intervalInverted,
         repsInverted: stateCurrentWord.repsInverted,
-        easeFactorInverted: stateCurrentWord.easeFactorInverted
+        easeFactorInverted: stateCurrentWord.easeFactorInverted,
+        isNewInverted: false
     });
 });
 

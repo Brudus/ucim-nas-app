@@ -19,8 +19,8 @@ const createMockStore = configureMockStore([thunk]);
 
 beforeEach((done) => {
     const wordData = {};
-    words.forEach(({ id, source, destination, easeFactor, repeatAt, interval, reps, easeFactorInverted, repeatAtInverted, intervalInverted, repsInverted }) => {
-        wordData[id] = { source, destination, easeFactor, repeatAt, interval, reps, easeFactorInverted, repeatAtInverted, intervalInverted, repsInverted };
+    words.forEach(({ id, source, destination, easeFactor, repeatAt, interval, reps, easeFactorInverted, repeatAtInverted, intervalInverted, repsInverted, isNew, isNewInverted }) => {
+        wordData[id] = { source, destination, easeFactor, repeatAt, interval, reps, easeFactorInverted, repeatAtInverted, intervalInverted, repsInverted, isNew, isNewInverted };
     });
     database.ref(`users/${uid}/words`).set(wordData).then(() => done());
 });
@@ -54,13 +54,15 @@ test('should add word to database and store', (done) => {
                 easeFactorInverted: 2.5,
                 repsInverted: 0,
                 intervalInverted: 0,
+                isNew: true,
+                isNewInverted: true,
                 ...wordData
             }
         });
 
         return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, easeFactorInverted: 2.5, repsInverted: 0, intervalInverted: 0, ...wordData});
+        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, easeFactorInverted: 2.5, repsInverted: 0, intervalInverted: 0, isNew: true, isNewInverted: true, ...wordData});
         done();
     });
 });
@@ -86,13 +88,15 @@ test('should add word with defaults to database and store', (done) => {
                 easeFactorInverted: 2.5,
                 repsInverted: 0,
                 intervalInverted: 0,
+                isNew: true,
+                isNewInverted: true,
                 ...wordDefaults        
             }
         });
 
         return database.ref(`users/${uid}/words/${actions[0].word.id}`).once('value');
     }).then((snapshot) => {
-        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, easeFactorInverted: 2.5, repsInverted: 0, intervalInverted: 0, ...wordDefaults});
+        expect(snapshot.val()).toEqual({easeFactor: 2.5, reps: 0, interval: 0, easeFactorInverted: 2.5, repsInverted: 0, intervalInverted: 0, isNew: true, isNewInverted: true, ...wordDefaults});
         done();
     });
 });

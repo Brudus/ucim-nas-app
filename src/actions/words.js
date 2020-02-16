@@ -19,9 +19,11 @@ export const startAddWord = (wordData = {}) => {
             repeatAtInverted = 0,
             intervalInverted = 0,
             repsInverted = 0,
-            easeFactorInverted = 2.5
+            easeFactorInverted = 2.5,
+            isNew = true,
+            isNewInverted = true
         } = wordData;
-        const word = { source, destination, repeatAt, interval, reps, easeFactor, repeatAtInverted, intervalInverted, repsInverted, easeFactorInverted };
+        const word = { source, destination, repeatAt, interval, reps, easeFactor, repeatAtInverted, intervalInverted, repsInverted, easeFactorInverted, isNew, isNewInverted };
         
         return database.ref(`users/${uid}/words`).push(word).then((ref) => {
             dispatch(addWord({

@@ -81,7 +81,8 @@ export class StudyPage extends React.Component {
                 repeatAtInverted: currentWord.repeatAtInverted,
                 intervalInverted: currentWord.intervalInverted,
                 repsInverted: currentWord.repsInverted,
-                easeFactorInverted: currentWord.easeFactorInverted
+                easeFactorInverted: currentWord.easeFactorInverted,
+                isNewInverted: false
             });
         } else {
             const oldEF = currentWord.easeFactor;
@@ -131,7 +132,8 @@ export class StudyPage extends React.Component {
                 repeatAt: currentWord.repeatAt,
                 interval: currentWord.interval,
                 reps: currentWord.reps,
-                easeFactor: currentWord.easeFactor
+                easeFactor: currentWord.easeFactor,
+                isNew: false
             });
         }
 
@@ -182,7 +184,7 @@ export class StudyPage extends React.Component {
     };
 };
 
-const getWords = (defaultWords, invertedWords) => { 
+const getWords = (defaultWords, invertedWords, newDefaultWords, newInvertedWords) => { 
     const defaultWordsWithType = defaultWords.map((word) => ({
         ...word, 
         type: 'default'}
@@ -191,16 +193,32 @@ const getWords = (defaultWords, invertedWords) => {
         ...word,
         type: 'inverted'
     }));
+
+    const defaultNewWords = newDefaultWords.slice(0, 10).map((word) => ({
+        ...word,
+        type: 'default'
+    }));
     
+    const invertedNewWords = newInvertedWords.slice(0, 10).map((word) => ({
+        ...word,
+        type: 'inverted'
+    }));
+
+    console.log(invertedNewWords);
+
     return defaultWordsWithType
         .concat(invertedWordsWithType)
+        .concat(defaultNewWords)
+        .concat(invertedNewWords)
         .sort((a, b) => (a.type === 'inverted' ? a.repeatAtInverted : a.repeatAt) - (b.type === 'inverted' ? b.repeatAtInverted : b.repeatAt));
 };
 
 const mapStateToProps = (state) => ({
     words: getWords(
-        state.words.filter((word) => word.repeatAt <= new Date()), 
-        state.words.filter((word) => word.repeatAtInverted <= new Date())
+        state.words.filter((word) => word.repeatAt <= new Date() && !word.isNew), 
+        state.words.filter((word) => word.repeatAtInverted <= new Date() && !word.isNewInverted),
+        state.words.filter((word) => word.isNew),
+        state.words.filter((word) => word.isNewInverted)
     ) 
 });
 

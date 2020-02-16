@@ -17,12 +17,13 @@ const formatDate = (dateToFormat) => {
     }
 };
 
-const WordListItem = ({ id, source, destination, repeatAt, repeatAtInverted }) => (
+const WordListItem = ({ id, source, destination, repeatAt, repeatAtInverted, isNew, isNewInverted }) => (
     <div>
         <Link to={`/edit/${id}`}>
             <h3>{destination}</h3>
         </Link>
         <h4>{source}</h4>
+        {(isNew || isNewInverted) && <span>NEW</span>}
         <p>German -> Serbian - Next repetition: {formatDate(repeatAt)}</p>
         <p>Serbian -> German - Next repetition: {formatDate(repeatAtInverted)}</p>
     </div>

@@ -12,6 +12,8 @@ exports[`should render EditWordPage correctly 1`] = `
         "id": "2",
         "interval": 2,
         "intervalInverted": 2,
+        "isNew": false,
+        "isNewInverted": false,
         "repeatAt": 1024,
         "repeatAtInverted": 1024,
         "reps": 1,
